@@ -232,9 +232,28 @@ class Tree
     difference_in_depth = (depth(node.left_node) - depth(node.right_node)).abs
     return difference_in_depth <= 1
   end
+
+  def rebalance!
+    unless balanced?
+      new_array = level_order
+      @root = build_tree(new_array)
+    end
+  end
 end
 
-x = Tree.new((1..20).to_a)
-x.delete(5)
-x.delete(4)
+x = Tree.new(Array.new(15){ rand(1..100)})
 p x.balanced?
+p x.level_order
+p x.preorder
+p x.postorder
+p x.inorder
+x.insert(500)
+x.insert(501)
+x.insert(502)
+p x.balanced?
+x.rebalance!
+p x.balanced?
+p x.level_order
+p x.preorder
+p x.postorder
+p x.inorder
