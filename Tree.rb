@@ -208,7 +208,33 @@ class Tree
     end
   end
 
+  def depth(node = @root)
+    if node.left_node.nil? && node.right_node.nil?
+      return 0
+    elsif node.left_node.nil? ^ node.right_node.nil?
+      if node.left_node.nil?
+        return depth(node.right_node) + 1
+      else
+        return depth(node.left_node) + 1
+      end
+    else
+      right_depth = depth(node.right_node)
+      left_depth = depth(node.left_node)
+      if right_depth > left_depth
+        return right_depth + 1
+      else 
+        return left_depth + 1
+      end
+    end 
+  end 
+
+  def balanced? (node = @root)
+    difference_in_depth = (depth(node.left_node) - depth(node.right_node)).abs
+    return difference_in_depth <= 1
+  end
 end
 
 x = Tree.new((1..20).to_a)
-x.postorder{|value| p value}
+x.delete(5)
+x.delete(4)
+p x.balanced?
