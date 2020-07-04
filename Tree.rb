@@ -171,7 +171,25 @@ class Tree
       inorder(node.right_node, result, &block)
     end
   end
+
+  def preorder(node = @root, result = [], &block)
+    if node.nil?
+      if block_given?
+        nil
+      else
+        result
+      end
+    else
+      inorder(node.left_node, result, &block)
+      if block_given?
+        yield node.data
+      else
+        result.append node.data
+      end
+      inorder(node.right_node, result, &block)
+    end
+  end
 end
 
 x = Tree.new((1..20).to_a)
-x.inorder{|value| p value}
+x.preorder{|value| p value}
