@@ -1,5 +1,4 @@
 require_relative 'Node'
-require 'pry'
 
 class Tree
   attr_reader :root
@@ -240,20 +239,3 @@ class Tree
     end
   end
 end
-
-x = Tree.new(Array.new(15){ rand(1..100)})
-p x.balanced?
-p x.level_order
-p x.preorder
-p x.postorder
-p x.inorder
-x.insert(500)
-x.insert(501)
-x.insert(502)
-p x.balanced?
-x.rebalance!
-p x.balanced?
-p x.level_order
-p x.preorder
-p x.postorder
-p x.inorder
