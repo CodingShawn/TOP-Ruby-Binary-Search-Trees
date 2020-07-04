@@ -134,7 +134,7 @@ class Tree
     end 
   end
 
-  def level_order_recursive(queue = [@root], result = [])
+  def level_order_recursive(queue = [@root], result = [], &block)
     current = queue.shift
     if current.nil?
       if block_given?
@@ -150,11 +150,11 @@ class Tree
       end
       queue.append(current.left_node) unless current.left_node.nil?
       queue.append(current.right_node) unless current.right_node.nil?
-      level_order_recursive(queue, result)
+      level_order_recursive(queue, result, &block)
     end
   end
 end
 
 x = Tree.new((1..20).to_a)
-p x.level_order_recursive
+x.level_order_recursive{|value| p value}
 binding.pry
