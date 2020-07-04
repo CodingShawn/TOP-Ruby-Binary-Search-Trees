@@ -153,8 +153,25 @@ class Tree
       level_order_recursive(queue, result, &block)
     end
   end
+
+  def inorder(node = @root, result = [], &block)
+    if node.nil?
+      if block_given?
+        nil
+      else
+        result
+      end
+    else
+      if block_given?
+        yield node.data
+      else
+        result.append node.data
+      end
+      inorder(node.left_node, result, &block)
+      inorder(node.right_node, result, &block)
+    end
+  end
 end
 
 x = Tree.new((1..20).to_a)
-x.level_order_recursive{|value| p value}
-binding.pry
+x.inorder{|value| p value}
