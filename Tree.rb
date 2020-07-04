@@ -110,8 +110,51 @@ class Tree
     end
     return pointer
   end
+
+  def level_order
+    queue = [@root]
+    result = []
+
+    until queue.empty?
+      current = queue.shift
+      if block_given?
+        yield current.data
+      else
+        result.append current.data
+      end
+
+      queue.append(current.left_node) if current.left_node != nil
+      queue.append(current.right_node) if current.right_node != nil
+    end
+
+    if block_given?
+      return nil
+    else
+      return result
+    end 
+  end
+
+  def level_order_recursive(queue = [@root], result = [])
+    current = queue.shift
+    if current.nil?
+      if block_given?
+        nil
+      else
+        result
+      end
+    else
+      if block_given?
+        yield current.data
+      else
+        result.append current.data
+      end
+      queue.append(current.left_node) unless current.left_node.nil?
+      queue.append(current.right_node) unless current.right_node.nil?
+      level_order_recursive(queue, result)
+    end
+  end
 end
 
 x = Tree.new((1..20).to_a)
-x.delete(6)
+p x.level_order_recursive
 binding.pry
