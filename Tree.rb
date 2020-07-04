@@ -180,16 +180,35 @@ class Tree
         result
       end
     else
-      inorder(node.left_node, result, &block)
+      preorder(node.left_node, result, &block)
       if block_given?
         yield node.data
       else
         result.append node.data
       end
-      inorder(node.right_node, result, &block)
+      preorder(node.right_node, result, &block)
     end
   end
+
+  def postorder(node = @root, result = [], &block)
+    if node.nil?
+      if block_given?
+        nil
+      else
+        result
+      end
+    else
+      postorder(node.left_node, result, &block)
+      postorder(node.right_node, result, &block)
+      if block_given?
+        yield node.data
+      else
+        result.append node.data
+      end
+    end
+  end
+
 end
 
 x = Tree.new((1..20).to_a)
-x.preorder{|value| p value}
+x.postorder{|value| p value}
